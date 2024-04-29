@@ -14,13 +14,13 @@ function info(initParam, msg) {
 }
 
 function warn(initParam, msg) {
-  if (config.get("logLevel") === "warn" || "error") {
+  if (config.get("logLevel") === "info" || "warn") {
     console.error(`${colors.bgYellow(`${initParam}:`)} ${msg}`);
   }
 }
 
 function error(initParam, msg) {
-  if (config.get("logLevel") === "warn" || "error") {
+  if (config.get("logLevel") === "info" || "warn" || "error") {
     console.error(`${colors.bgRed(`${initParam}:`)} ${msg}`);
   }
 }
