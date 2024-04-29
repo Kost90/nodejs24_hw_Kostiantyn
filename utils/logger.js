@@ -1,29 +1,27 @@
 const config = require("config");
-const { bgBlue, bgYellow, bgRed } = require("colors");
+const colors = require("colors");
 
-if (config.get("colors.enabled") == 1) {
-  function info(initParam, msg) {
-    console.log(`${bgBlue(`${initParam}:`)} ${msg}`);
-  }
+if (config.get("colors") == 1) {
+  colors.enable();
+} else {
+  colors.disable();
+}
 
-  function warn(initParam, msg) {
-    console.error(`${bgYellow(`${initParam}:`)} ${msg}`);
+function info(initParam, msg) {
+  if (config.get("logLevel") === "info") {
+    console.log(`${colors.bgBlue(`${initParam}:`)} ${msg}`);
   }
+}
 
-  function error(initParam, msg) {
-    console.error(`${bgRed(`${initParam}:`)} ${msg}`);
+function warn(initParam, msg) {
+  if (config.get("logLevel") === "warn" || "error") {
+    console.error(`${colors.bgYellow(`${initParam}:`)} ${msg}`);
   }
-} else if (config.get("colors.enabled") == 0) {
-  function info(initParam, msg) {
-    console.log(`${initParam}:${msg}`);
-  }
+}
 
-  function warn(initParam, msg) {
-    console.error(`${initParam}:${msg}`);
-  }
-
-  function error(initParam, msg) {
-    console.error(`${initParam}:${msg}`);
+function error(initParam, msg) {
+  if (config.get("logLevel") === "warn" || "error") {
+    console.error(`${colors.bgRed(`${initParam}:`)} ${msg}`);
   }
 }
 
