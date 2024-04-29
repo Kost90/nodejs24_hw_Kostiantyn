@@ -1,7 +1,19 @@
-const logger = require('./utils/logger')('main')
+const dotenv = require("dotenv");
+dotenv.config();
 
-logger.info('the script is running!')
+const config = require("config");
 
-logger.error('error: fail to running the script!')
+const logger = require("./utils/logger")("main");
 
-logger.warn('warn message!')
+const logLevel = config.get("logLevel");
+
+if (logLevel === "info") {
+  logger.info("the script is running!");
+  logger.error("error: fail to running the script!");
+  logger.warn("warn message!");
+} else if (logLevel === "error") {
+  logger.error("error: fail to running the script!");
+} else {
+  logger.error("error: fail to running the script!");
+  logger.warn("warn message!");
+}
