@@ -128,3 +128,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+.DS_Store
+
+# ignore all in 'source and target' except .gitkeep file
+source/*
+!source/.gitkeep
+target/*
+!target/.gitkeep
