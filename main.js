@@ -1,9 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const logger = require("./utils/logger")("main");
+const fileSync = require('./file_sync')();
 
-logger.info("the script is running!");
+fileSync.start()
 
-logger.warn("warn message!");
-
-logger.error("error: fail to running the script!");
