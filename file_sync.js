@@ -9,7 +9,7 @@ function start(srcDir, trgDir) {
   // Передаємо путь до корня каталогів (source та target)
   fs.readdir(srcDir, { recursive: true }, (error, files) => {
     if (error) {
-      logger.error("cannot read file", error);
+      logger.error("cannot read source folder content", error);
       return;
     }
     // етеруємося по масивву назв файлів та вкладених каталогів з папки source
@@ -17,16 +17,15 @@ function start(srcDir, trgDir) {
       // створюємо шляхи які включають корнєвий шлях папки та імя файлу або вкладеної папки з массиву назв папки source
       const srcPath = path.join(srcDir, file);
       const trgPath = path.join(trgDir, file);
-
       //   перевірка чи названа з масиву є папкою
       if (fs.statSync(srcPath).isDirectory()) {
         // створення вкладеної папки у каталозі target
         fs.mkdir(trgPath, (error) => {
           if (error) {
             logger.error(error);
+            return;
           }
         });
-
         // рекурсивно викликаємо цю ж функцію для ітерації спочатку
         start(srcPath, trgPath);
       } else {
