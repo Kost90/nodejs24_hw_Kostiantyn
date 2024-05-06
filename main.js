@@ -6,6 +6,5 @@ const fileSync = require('./file_sync')();
 fileSync.start()
 
 logger.info('first log')
-logger.info('first log')
 logger.warn('first log')
 

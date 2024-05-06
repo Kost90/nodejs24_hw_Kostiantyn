@@ -13,37 +13,27 @@ if (!fs.existsSync(logsInfoPath) && !fs.existsSync(logsErrorsPath)) {
   fs.mkdir(directory, (err) => {
     if (err) throw err;
   });
-  fs.writeFile(logsInfoPath, "", (error) => {
-    throw error;
-  });
-  fs.writeFile(logsErrorsPath, "", (error) => {
-    throw error;
-  });
+}
+
+// ! Функції які логають події стрімів
+function StreamFinishLog() {
+  console.log("Data has been written to the destination file.");
+}
+
+function streamErrorLog(error) {
+  console.error(
+    `${colors.bgRed(`Error writing to the destination file:`)} ${error}}`
+  );
 }
 
 // ! створюємо стріми
-const writeInfoStream = fs.createWriteStream(logsInfoPath);
-const writeErrorsStream = fs.createWriteStream(logsErrorsPath);
+const writeInfoStream = fs.createWriteStream(logsInfoPath,{flags:'a'});
+const writeErrorsStream = fs.createWriteStream(logsErrorsPath,{flags:'a'});
 
-writeInfoStream.on("error", (error) => {
-  console.error(
-    `${colors.bgRed(`Error writing to the destination file:`)} ${error}}`
-  );
-});
-
-writeInfoStream.on("finish", () => {
-  console.log("Data has been written to the destination file.");
-});
-
-writeErrorsStream.on("error", (error) => {
-  console.error(
-    `${colors.bgRed(`Error writing to the destination file:`)} ${error}}`
-  );
-});
-
-writeErrorsStream.on("finish", () => {
-  console.log("Data has been written to the destination file.");
-});
+writeInfoStream.on("error", streamErrorLog);
+writeInfoStream.on("finish", StreamFinishLog);
+writeErrorsStream.on("error", streamErrorLog);
+writeErrorsStream.on("finish", StreamFinishLog);
 
 // ! закриття стрімів
 process.on("beforeExit", () => {
@@ -60,7 +50,7 @@ if (config.get("colors") == 1) {
 // ! Функції з стрімами
 function info(initParam, msg) {
   const currentDate = new Date();
-  const isoDate = currentDate.toISOString().split("T")[0];
+  const isoDate = currentDate.toISOString();
 
   writeInfoStream.write(`${isoDate} ${initParam}: ${msg}\n`);
 
@@ -71,7 +61,7 @@ function info(initParam, msg) {
 
 function warn(initParam, msg) {
   const currentDate = new Date();
-  const isoDate = currentDate.toISOString().split("T")[0];
+  const isoDate = currentDate.toISOString();
   writeErrorsStream.write(`${isoDate} ${initParam}:${msg}\n`);
   if (config.get("logLevel") === "info" || "warn") {
     console.error(`${colors.bgYellow(`${initParam}:`)} ${msg}`);
@@ -80,7 +70,7 @@ function warn(initParam, msg) {
 
 function error(initParam, msg) {
   const currentDate = new Date();
-  const isoDate = currentDate.toISOString().split("T")[0];
+  const isoDate = currentDate.toISOString();
   writeErrorsStream.write(`${isoDate} ${initParam}: ${msg}\n`);
   if (config.get("logLevel") === "info" || "warn" || "error") {
     console.error(`${colors.bgRed(`${initParam}:`)} ${msg}`);
