@@ -51,7 +51,6 @@ if (config.get("colors") == 1) {
 function info(initParam, msg) {
   const currentDate = new Date();
   const isoDate = currentDate.toISOString();
-
   writeInfoStream.write(`${isoDate} ${initParam}: ${msg}\n`);
 
   if (config.get("logLevel") === "info") {
@@ -63,6 +62,7 @@ function warn(initParam, msg) {
   const currentDate = new Date();
   const isoDate = currentDate.toISOString();
   writeErrorsStream.write(`${isoDate} ${initParam}:${msg}\n`);
+
   if (config.get("logLevel") === "info" || "warn") {
     console.error(`${colors.bgYellow(`${initParam}:`)} ${msg}`);
   }
@@ -72,9 +72,9 @@ function error(initParam, msg) {
   const currentDate = new Date();
   const isoDate = currentDate.toISOString();
   writeErrorsStream.write(`${isoDate} ${initParam}: ${msg}\n`);
-  if (config.get("logLevel") === "info" || "warn" || "error") {
-    console.error(`${colors.bgRed(`${initParam}:`)} ${msg}`);
-  }
+
+  //? ніяких кондішенів тут не потрібно, цей метод завжди пише в термінал :)
+  console.error(`${colors.bgRed(`${initParam}:`)} ${msg}`);
 }
 
 function getLogger(initParam) {
