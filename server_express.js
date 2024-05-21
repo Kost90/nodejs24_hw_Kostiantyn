@@ -12,9 +12,7 @@ const app = express();
 
 app.listen(port, () => logger.info(`server is listening on [${port}] port`));
 
-const json = express.json();
-
-app.use(json);
+app.use(express.json());
 
 app.use(accessLogger);
 

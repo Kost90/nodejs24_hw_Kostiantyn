@@ -1,14 +1,21 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const {validateUserData,validateUserId} = require('../midleware/validators');
+const validateUserData = require("../midleware/validators");
+const UserIdChecker = require("../midleware/userIdChecker");
 
-router.get('/',(req,res) =>{
-    res.statusCode = 200;
-    const result = [];
-    res.send(result) 
+router.get("/", (req, res) => {
+  const result = [];
+  res.send(result);
 });
-router.post('/user',validateUserData);
-router.get('/user/:userId',validateUserId);
-router.delete('/user/:userId',validateUserId);
+router.post("/user", validateUserData, (req, res) => {
+  res.send("User created");
+});
+router.get("/user/:userId", UserIdChecker, (req, res) => {
+  const userId = res.body;
+  res.send({ userId: userId });
+});
+router.delete("/user/:userId", UserIdChecker, (req, res) => {
+  res.status(204);
+});
 
-module.exports = router
+module.exports = router;
