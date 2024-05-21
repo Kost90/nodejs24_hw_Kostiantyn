@@ -8,6 +8,7 @@
     "start": "node ./main.js",
     "start-dev": "nodemon ./main.js",
     "dev-server": "nodemon --inspect ./server.js",
+    "dev-server-express": "nodemon --inspect ./server_express.js",
     "server": "node server.js"
   },
   "author": "",
@@ -15,7 +16,10 @@
   "dependencies": {
     "colors": "^1.4.0",
     "config": "^3.3.11",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
