@@ -5,7 +5,6 @@ const userSchema = object({
   email: string().email().required(),
 });
 
-
 const validateUserData = async (req, res, next) => {
   try {
     const data = req.body;
@@ -18,6 +17,4 @@ const validateUserData = async (req, res, next) => {
   }
 };
 
-module.exports = 
-    validateUserData
-;
+module.exports = validateUserData;

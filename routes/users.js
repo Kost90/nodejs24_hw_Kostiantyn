@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const usersController = require("../controllers/usersController");
 const validateUserData = require("../midleware/validators");
 const UserIdChecker = require("../midleware/userIdChecker");
 
-router.get("/", (req, res) => {
-  const result = [];
-  res.send(result);
-});
+router.get("/", usersController.getAllUsers);
 router.post("/user", validateUserData, (req, res) => {
   res.send("User created");
 });
